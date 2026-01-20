@@ -1,0 +1,812 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Epoch Digital — AI Automation Systems</title>
+    <meta name="description" content="Applied AI automation systems for small businesses.">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#3B82F6',
+                            orange: '#F97316',
+                            dark: '#050505',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Card Stack Logic */
+        .cards-section {
+            --_offset-steps: 5rem;
+            --_scale-steps: 12;
+            --_opacity-steps: 18;
+            --_offset-steps-two: calc(var(--_offset-steps) * -1);
+            --_offset-steps-three: calc(var(--_offset-steps) * -2);
+            --scale-steps-two: calc(1 - var(--_scale-steps) * 0.01);
+            --scale-steps-three: calc(1 - var(--_scale-steps) * 0.02);
+            --opacity-steps-two: calc(1 - var(--_opacity-steps) * 0.015);
+            --opacity-steps-three: calc(1 - var(--_opacity-steps) * 0.03);
+            display: grid;
+            grid-template-areas: "stack";
+            width: 100%;
+            max-width: 28rem;
+            perspective: 1000px;
+        }
+
+        .feature-card {
+            grid-area: stack;
+            transition: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+            translate: var(--_offset) 0;
+            order: var(--_order);
+            z-index: var(--_order);
+            scale: var(--_scale);
+            opacity: var(--_opacity);
+            cursor: grab;
+            user-select: none;
+            transform-style: preserve-3d;
+            will-change: transform, opacity;
+        }
+
+        .feature-card:active { cursor: grabbing; }
+
+        .feature-card:nth-of-type(1) { --_order: var(--_1-order); --_scale: var(--_1-scale); --_opacity: var(--_1-opacity); --_offset: var(--_1-offset); }
+        .feature-card:nth-of-type(2) { --_order: var(--_2-order); --_scale: var(--_2-scale); --_opacity: var(--_2-opacity); --_offset: var(--_2-offset); }
+        .feature-card:nth-of-type(3) { --_order: var(--_3-order); --_scale: var(--_3-scale); --_opacity: var(--_3-opacity); --_offset: var(--_3-offset); }
+        .feature-card:nth-of-type(4) { --_order: var(--_4-order); --_scale: var(--_4-scale); --_opacity: var(--_4-opacity); --_offset: var(--_4-offset); }
+
+        .cards-section.feature-1-active {
+            --_1-order: 4; --_1-scale: 1; --_1-opacity: 1; --_1-offset: 0;
+            --_2-order: 3; --_2-scale: var(--scale-steps-two); --_2-opacity: var(--opacity-steps-two); --_2-offset: var(--_offset-steps-two);
+            --_3-order: 2; --_3-scale: var(--scale-steps-three); --_3-opacity: var(--opacity-steps-three); --_3-offset: var(--_offset-steps-three);
+            --_4-order: 1; --_4-scale: calc(1 - var(--_scale-steps) * 0.025); --_4-opacity: calc(1 - var(--_opacity-steps) * 0.045); --_4-offset: calc(var(--_offset-steps) * -2.5);
+        }
+        .cards-section.feature-2-active {
+            --_2-order: 4; --_2-scale: 1; --_2-opacity: 1; --_2-offset: 0;
+            --_3-order: 3; --_3-scale: var(--scale-steps-two); --_3-opacity: var(--opacity-steps-two); --_3-offset: var(--_offset-steps-two);
+            --_4-order: 2; --_4-scale: var(--scale-steps-three); --_4-opacity: var(--opacity-steps-three); --_4-offset: var(--_offset-steps-three);
+            --_1-order: 1; --_1-scale: calc(1 - var(--_scale-steps) * 0.025); --_1-opacity: calc(1 - var(--_opacity-steps) * 0.045); --_1-offset: calc(var(--_offset-steps) * -2.5);
+        }
+        .cards-section.feature-3-active {
+            --_3-order: 4; --_3-scale: 1; --_3-opacity: 1; --_3-offset: 0;
+            --_4-order: 3; --_4-scale: var(--scale-steps-two); --_4-opacity: var(--opacity-steps-two); --_4-offset: var(--_offset-steps-two);
+            --_1-order: 2; --_1-scale: var(--scale-steps-three); --_1-opacity: var(--opacity-steps-three); --_1-offset: var(--_offset-steps-three);
+            --_2-order: 1; --_2-scale: calc(1 - var(--_scale-steps) * 0.025); --_2-opacity: calc(1 - var(--_opacity-steps) * 0.045); --_2-offset: calc(var(--_offset-steps) * -2.5);
+        }
+        .cards-section.feature-4-active {
+            --_4-order: 4; --_4-scale: 1; --_4-opacity: 1; --_4-offset: 0;
+            --_1-order: 3; --_1-scale: var(--scale-steps-two); --_1-opacity: var(--opacity-steps-two); --_1-offset: var(--_offset-steps-two);
+            --_2-order: 2; --_2-scale: var(--scale-steps-three); --_2-opacity: var(--opacity-steps-three); --_2-offset: var(--_offset-steps-three);
+            --_3-order: 1; --_3-scale: calc(1 - var(--_scale-steps) * 0.025); --_3-opacity: calc(1 - var(--_opacity-steps) * 0.045); --_3-offset: calc(var(--_offset-steps) * -2.5);
+        }
+
+        .dragging-left { transform: translateX(-30px) rotateY(-5deg); }
+        .dragging-right { transform: translateX(30px) rotateY(5deg); }
+
+        .glass-card {
+            background: linear-gradient(135deg, #0A0A0A 0%, #111111 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+            backdrop-filter: blur(40px);
+        }
+    </style>
+<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link id="all-fonts-link-font-newsreader" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..800&amp;display=swap"><style id="all-fonts-style-font-newsreader">.font-newsreader { font-family: 'Newsreader', serif !important; }</style><link id="all-fonts-link-font-google-sans-flex" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-google-sans-flex">.font-google-sans-flex { font-family: 'Google Sans Flex', sans-serif !important; }</style><link id="all-fonts-link-font-oswald" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-oswald">.font-oswald { font-family: 'Oswald', sans-serif !important; }</style><link id="all-fonts-link-font-dm-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-dm-sans">.font-dm-sans { font-family: 'DM Sans', sans-serif !important; }</style><link id="all-fonts-link-font-cormorant" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-cormorant">.font-cormorant { font-family: 'Cormorant Garamond', serif !important; }</style></head>
+
+<body class="antialiased min-h-screen relative selection:bg-brand-blue/30 selection:text-white">
+
+    <!-- Spline Background -->
+    <iframe src="https://my.spline.design/binarymaterialcopy-uzQoq9YUCPK8Sqz8n9uP5qMO" frameborder="0" width="100%" height="100%" class="fixed top-0 left-0 w-full h-screen z-0 pointer-events-none opacity-40 mix-blend-screen"></iframe>
+
+    <!-- Header -->
+    <header class="w-full z-50 fixed top-0 left-0 right-0 backdrop-blur-xl border-b bg-black/50 border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 cursor-pointer">
+                    <div class="w-2 h-2 bg-brand-blue rounded-full animate-pulse"></div>
+                    <span class="font-semibold text-sm tracking-tight text-white uppercase font-sans">EPOCH DIGITAL</span>
+                </div>
+
+                <!-- Nav -->
+                <nav class="hidden md:flex items-center space-x-8 text-xs font-medium tracking-tight text-white/60">
+                    <a href="#services" class="hover:text-white transition-colors">Services</a>
+                    <a href="#use-cases" class="hover:text-white transition-colors">Use Cases</a>
+                    <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+                </nav>
+
+                <!-- CTA -->
+                <div class="flex space-x-4 items-center">
+                    <a href="#contact" class="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white transition hover:bg-white/10 hover:border-white/20 gap-2">
+                        <span>Book System Call</span>
+                        <iconify-icon icon="solar:arrow-right-linear" width="14"></iconify-icon>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero Section -->
+    <section class="min-h-screen flex items-center pt-24 pb-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- Left Content: Text & Controls -->
+                <div class="space-y-8 relative">
+                    <div class="space-y-4">
+                        
+                        
+                        <h1 class="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white leading-[1.1]">
+                            AI Systems That 
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-white">Replace Bottlenecks.</span>
+                        </h1>
+                        
+                        <p class="text-base text-white/60 max-w-lg leading-relaxed">
+                            We design and deploy applied AI automation for small businesses — so leads get answered, appointments get booked, and follow-ups happen automatically. Drag the cards to explore what we automate.
+                        </p>
+                    </div>
+
+                    <!-- Navigation Dots -->
+                    <div class="flex items-center gap-3">
+                        <button id="nav-1" class="w-2 h-2 rounded-full bg-brand-blue transition-all scale-125 ring-2 ring-brand-blue/20 ring-offset-2 ring-offset-black"></button>
+                        <button id="nav-2" class="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all"></button>
+                        <button id="nav-3" class="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all"></button>
+                        <button id="nav-4" class="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all"></button>
+                    </div>
+
+                    <!-- Feature List Details -->
+                    <div id="feature-details" class="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
+                        <div class="flex items-center gap-2 text-sm text-white/70">
+                            <iconify-icon icon="solar:check-circle-linear" class="text-brand-blue"></iconify-icon>
+                            <span>Designed for real-world usage</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-white/70">
+                            <iconify-icon icon="solar:check-circle-linear" class="text-brand-blue"></iconify-icon>
+                            <span>Automations that don’t break silently</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-white/70">
+                            <iconify-icon icon="solar:check-circle-linear" class="text-brand-blue"></iconify-icon>
+                            <span>Systems over hype</span>
+                        </div>
+                         <div class="flex items-center gap-2 text-sm text-white/70">
+                            <iconify-icon icon="solar:check-circle-linear" class="text-brand-blue"></iconify-icon>
+                            <span>Typical setup: days–weeks</span>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="">
+                        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                            <a href="#contact" class="group bg-white text-black hover:bg-gray-200 rounded-lg px-6 py-3 text-sm font-medium transition-all flex items-center justify-center gap-2">
+                                Book System Call
+                                <iconify-icon icon="solar:arrow-right-linear" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+                            </a>
+                            <a href="#use-cases" class="group text-white border border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3 text-sm font-medium transition-all flex items-center justify-center gap-2">
+                                View Use Cases
+                            </a>
+                        </div>
+                        <p class="text-xs text-white/40 font-mono mt-4">:: NO-PRESSURE CALL // LEAVE WITH AN AUTOMATION PLAN</p>
+                    </div>
+                </div>
+
+                <!-- Right Content: Interactive Stacked Cards -->
+                <div class="flex lg:justify-end h-[550px] items-center justify-center">
+                    <div class="cards-section feature-1-active h-[500px]">
+                        
+                        <!-- Card 1: AI Website Receptionist -->
+                        <div class="feature-card glass-card rounded-2xl p-8 h-full flex flex-col justify-between">
+                            <div class="">
+                                <div class="flex items-center gap-4 mb-8">
+                                    <div class="w-12 h-12 rounded-xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue">
+                                        <iconify-icon icon="solar:chat-round-dots-bold" width="24"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs uppercase tracking-wider text-white/40 font-mono">Lead Capture</span>
+                                        <h3 class="text-2xl font-medium text-white tracking-tight mt-1">AI Website Receptionist</h3>
+                                    </div>
+                                </div>
+                                <p class="text-lg text-white/70 leading-relaxed mb-8">
+                                    24/7 chat + SMS that answers questions, qualifies leads, and routes real opportunities to you.
+                                </p>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between text-sm py-2 border-b border-white/5">
+                                        <span class="text-white/40 font-mono">Coverage</span>
+                                        <span class="text-white font-mono">24/7</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm py-2 border-b border-white/5">
+                                        <span class="text-white/40 font-mono">Handoff</span>
+                                        <span class="text-white font-mono">SMS + Email</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8 pt-6 border-t border-white/10">
+                                <ul class="space-y-2 text-sm text-white/60">
+                                    <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-brand-blue"></iconify-icon> FAQ answers</li>
+                                    <li class="flex items-center gap-2"><iconify-icon icon="solar:check-read-linear" class="text-brand-blue"></iconify-icon> Lead qualification</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Booking & Scheduling -->
+                        <div class="feature-card glass-card rounded-2xl p-8 h-full flex flex-col justify-between">
+                            <div class="">
+                                <div class="flex items-center gap-4 mb-8">
+                                    <div class="w-12 h-12 rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center text-brand-orange">
+                                        <iconify-icon icon="solar:calendar-add-bold" width="24"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs uppercase tracking-wider text-white/40 font-mono">Appointments</span>
+                                        <h3 class="text-2xl font-medium text-white tracking-tight mt-1">Booking &amp; Scheduling</h3>
+                                    </div>
+                                </div>
+                                <p class="text-lg text-white/70 leading-relaxed mb-8">
+                                    Calendar flows that confirm, remind, and reschedule — reducing no-shows and admin work.
+                                </p>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between text-sm py-2 border-b border-white/5">
+                                        <span class="text-white/40 font-mono">Booking</span>
+                                        <span class="text-white font-mono">Instant</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm py-2 border-b border-white/5">
+                                        <span class="text-white/40 font-mono">Reminders</span>
+                                        <span class="text-white font-mono">SMS + Email</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8 pt-6 border-t border-white/10">
+                                <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-brand-orange h-full w-2/3 rounded-full"></div>
+                                </div>
+                                <p class="text-xs text-white/30 mt-2 font-mono text-right">TARGET: FEWER NO-SHOWS</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: AI Voice Agent -->
+                        <div class="feature-card glass-card rounded-2xl p-8 h-full flex flex-col justify-between">
+                            <div class="">
+                                <div class="flex items-center gap-4 mb-8">
+                                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                                        <iconify-icon icon="solar:phone-calling-bold" width="24"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs uppercase tracking-wider text-white/40 font-mono">Calls</span>
+                                        <h3 class="text-2xl font-medium text-white tracking-tight mt-1">AI Voice Agent</h3>
+                                    </div>
+                                </div>
+                                <p class="text-lg text-white/70 leading-relaxed mb-8">
+                                    An inbound call agent that answers, qualifies, books appointments, and escalates when needed.
+                                </p>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between text-sm py-2 border-b border-white/5">
+                                        <span class="text-white/40 font-mono">Availability</span>
+                                        <span class="text-white font-mono">After-hours</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm py-2 border-b border-white/5">
+                                        <span class="text-white/40 font-mono">Escalation</span>
+                                        <span class="text-white font-mono">To Human</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8 flex gap-3 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                                <iconify-icon icon="simple-icons:twilio" width="20"></iconify-icon>
+                                <iconify-icon icon="simple-icons:openai" width="20"></iconify-icon>
+                                <iconify-icon icon="solar:calendar-linear" width="20"></iconify-icon>
+                                <iconify-icon icon="solar:microphone-3-linear" width="20"></iconify-icon>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: Follow-Up & Review Engine -->
+                        <div class="feature-card glass-card rounded-2xl p-8 h-full flex flex-col justify-between">
+                            <div class="">
+                                <div class="flex items-center gap-4 mb-8">
+                                    <div class="w-12 h-12 rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center text-brand-orange">
+                                        <iconify-icon icon="solar:star-bold" width="24"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs uppercase tracking-wider text-white/40 font-mono">Conversion</span>
+                                        <h3 class="text-2xl font-medium text-white tracking-tight mt-1">Follow-Up &amp; Review Engine</h3>
+                                    </div>
+                                </div>
+                                <p class="text-lg text-white/70 leading-relaxed mb-8">
+                                    Automated follow-up sequences that close more deals and generate more 5-star reviews — without chasing.
+                                </p>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between text-sm py-2 border-b border-white/5">
+                                        <span class="text-white/40 font-mono">Follow-up</span>
+                                        <span class="text-white font-mono">Automated</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm py-2 border-b border-white/5">
+                                        <span class="text-white/40 font-mono">Reviews</span>
+                                        <span class="text-white font-mono">Requested</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#contact" class="mt-8 w-full py-3 rounded-lg bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-sm font-medium hover:bg-brand-orange/20 transition-colors block text-center">
+                                Book System Call
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><section class="border-y border-white/5 bg-black/40 backdrop-blur-sm relative z-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <p class="text-center text-sm font-medium text-white/40 mb-8 font-mono uppercase tracking-widest">Seamlessly Integrated With</p>
+        <div class="w-full flex overflow-hidden opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 relative" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            animation: marquee 40s linear infinite;
+        }
+    </style>
+    <div class="flex items-center shrink-0 animate-marquee gap-12 md:gap-20 pr-12 md:pr-20">
+        <iconify-icon icon="simple-icons:hubspot" width="28" class="hover:text-[#ff7a59] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:salesforce" width="36" class="hover:text-[#00a1e0] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:gmail" width="28" class="hover:text-[#EA4335] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:twilio" width="28" class="hover:text-[#F22F46] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:openai" width="28" class="hover:text-white transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:zapier" width="32" class="hover:text-[#FF4F00] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:googlecalendar" width="28" class="hover:text-[#4285F4] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:n8n" width="32" class="hover:text-[#FF6584] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:stripe" width="36" class="hover:text-[#635BFF] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:make" width="28" class="hover:text-[#6420FF] transition-colors"></iconify-icon>
+    </div>
+    <div class="flex items-center shrink-0 animate-marquee gap-12 md:gap-20 pr-12 md:pr-20" aria-hidden="true">
+        <iconify-icon icon="simple-icons:hubspot" width="28" class="hover:text-[#ff7a59] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:salesforce" width="36" class="hover:text-[#00a1e0] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:gmail" width="28" class="hover:text-[#EA4335] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:twilio" width="28" class="hover:text-[#F22F46] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:openai" width="28" class="hover:text-white transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:zapier" width="32" class="hover:text-[#FF4F00] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:googlecalendar" width="28" class="hover:text-[#4285F4] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:n8n" width="32" class="hover:text-[#FF6584] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:stripe" width="36" class="hover:text-[#635BFF] transition-colors"></iconify-icon>
+        <iconify-icon icon="simple-icons:make" width="28" class="hover:text-[#6420FF] transition-colors"></iconify-icon>
+    </div>
+</div>
+    </div>
+</section><section class="py-24 relative z-10" id="services">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-16 md:text-center max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-medium text-white tracking-tight mb-4">Built for Revenue, <span class="text-white/40">Not Just Hype.</span></h2>
+            <p class="text-lg text-white/60">Most AI tools are toys. Epoch systems are engineered for business continuity, lead capture, and revenue operations.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Feature 1 -->
+            <div class="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-brand-blue/30 transition-all hover:bg-white/[0.07]">
+                <div class="w-10 h-10 rounded-lg bg-brand-blue/10 flex items-center justify-center text-brand-blue mb-4 group-hover:scale-110 transition-transform">
+                    <iconify-icon icon="solar:clock-circle-bold" width="20"></iconify-icon>
+                </div>
+                <h3 class="text-lg font-medium text-white mb-2">Zero Latency Response</h3>
+                <p class="text-sm text-white/60 leading-relaxed">Leads convert 391% higher when contacted within 1 minute. Our systems engage instantly via SMS or Voice, 24/7/365.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-brand-orange/30 transition-all hover:bg-white/[0.07]">
+                <div class="w-10 h-10 rounded-lg bg-brand-orange/10 flex items-center justify-center text-brand-orange mb-4 group-hover:scale-110 transition-transform">
+                    <iconify-icon icon="solar:shield-check-bold" width="20"></iconify-icon>
+                </div>
+                <h3 class="text-lg font-medium text-white mb-2">Guardrails &amp; Safety</h3>
+                <p class="text-sm text-white/60 leading-relaxed">Custom prompt engineering ensures the AI stays on script. No hallucinations, no off-brand promises. Just business.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/30 transition-all hover:bg-white/[0.07]">
+                <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition-transform">
+                    <iconify-icon icon="solar:database-bold" width="20"></iconify-icon>
+                </div>
+                <h3 class="text-lg font-medium text-white mb-2">Perfect CRM Hygiene</h3>
+                <p class="text-sm text-white/60 leading-relaxed">Every conversation is transcribed, summarized, and tagged in your CRM automatically. Never manually enter data again.</p>
+            </div>
+        </div>
+    </div>
+</section><section class="py-24 relative z-10 border-t border-white/5" id="use-cases">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <!-- Visual -->
+            <div class="relative rounded-2xl overflow-hidden border border-white/10 group">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10 opacity-60"></div>
+                <img src="https://images.unsplash.com/photo-1640906152676-dace6710d24b?w=2160&amp;q=80" alt="Dashboard Interface" class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105 opacity-80">
+                
+                <!-- Floating Element -->
+                <div class="absolute bottom-8 left-8 right-8 z-20">
+                    <div class="bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl p-4 shadow-2xl transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center shrink-0">
+                                <iconify-icon icon="solar:check-circle-bold"></iconify-icon>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-white">Lead Qualified</p>
+                                <p class="text-xs text-white/50 mt-1">AI Agent successfully booked a meeting for Tuesday at 2:00 PM and synced to Salesforce.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="space-y-8">
+                <div>
+                    <span class="text-brand-blue font-mono text-xs uppercase tracking-wider mb-2 block">Case Study</span>
+                    <h2 class="text-3xl md:text-4xl font-medium text-white tracking-tight mb-4">The "Infinite" Receptionist</h2>
+                    <p class="text-lg text-white/60 leading-relaxed">
+                        Stop letting calls go to voicemail. Our Voice AI answers concurrently—meaning if 50 people call at once, 50 agents answer. It qualifies intent, answers FAQs, and books appointments directly into your calendar.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex gap-4 p-4 rounded-lg bg-white/5 border border-white/5">
+                        <iconify-icon icon="solar:graph-up-linear" width="24" class="text-white/40 mt-1"></iconify-icon>
+                        <div>
+                            <h4 class="text-white font-medium text-sm">Revenue Recovery</h4>
+                            <p class="text-sm text-white/50 mt-1">Recapture 20-30% of missed revenue from unaddressed leads.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 p-4 rounded-lg bg-white/5 border border-white/5">
+                        <iconify-icon icon="solar:calendar-check-linear" width="24" class="text-white/40 mt-1"></iconify-icon>
+                        <div>
+                            <h4 class="text-white font-medium text-sm">Full Calendar Integration</h4>
+                            <p class="text-sm text-white/50 mt-1">Real-time availability checks. No double bookings. Ever.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <a href="#contact" class="text-brand-blue hover:text-white transition-colors text-sm font-medium flex items-center gap-2 group">
+                        Deploy this system
+                        <iconify-icon icon="solar:arrow-right-linear" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><section id="contact" class="py-24 relative z-10 border-t border-white/5 bg-[#050505]">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-brand-blue/50 to-transparent"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-5 gap-12 lg:gap-24">
+            
+            <!-- Left: Context -->
+            <div class="lg:col-span-2 space-y-8">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-medium text-white tracking-tight mb-4">Book Your System Audit.</h2>
+                    <p class="text-white/60 leading-relaxed">
+                        We don't do sales pitches. We do system audits. In this 15-minute call, we will map out your current bottlenecks and demonstrate a live prototype of an automation solving it.
+                    </p>
+                </div>
+
+                <div class="space-y-6 pt-4">
+                    <div class="flex items-center gap-4 text-sm text-white/80">
+                        <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                            <iconify-icon icon="solar:videocamera-record-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <p class="font-medium text-white">Google Meet</p>
+                            <p class="text-white/40 text-xs">Link sent upon confirmation</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 text-sm text-white/80">
+                        <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                            <iconify-icon icon="solar:clock-circle-linear" width="20"></iconify-icon>
+                        </div>
+                        <div>
+                            <p class="font-medium text-white">15 Minutes</p>
+                            <p class="text-white/40 text-xs">Hard stop. We respect your time.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Interactive Calendar Widget -->
+            <div class="lg:col-span-3">
+                <div class="bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative">
+                    <!-- Calendar Header -->
+                    <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+                        </div>
+                        <span class="text-xs font-mono text-white/40">CALENDAR_V2.0</span>
+                    </div>
+
+                    <div class="p-6 md:p-8 grid md:grid-cols-2 gap-8" id="booking-widget">
+                        <!-- Date Picker -->
+                        <div>
+                            <div class="flex items-center justify-between mb-6">
+                                <span class="text-white font-medium">October 2025</span>
+                                <div class="flex gap-2">
+                                    <button class="w-8 h-8 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors">
+                                        <iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon>
+                                    </button>
+                                    <button class="w-8 h-8 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors">
+                                        <iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-7 gap-1 mb-2 text-center">
+                                <span class="text-xs text-white/30 font-mono py-2">S</span>
+                                <span class="text-xs text-white/30 font-mono py-2">M</span>
+                                <span class="text-xs text-white/30 font-mono py-2">T</span>
+                                <span class="text-xs text-white/30 font-mono py-2">W</span>
+                                <span class="text-xs text-white/30 font-mono py-2">T</span>
+                                <span class="text-xs text-white/30 font-mono py-2">F</span>
+                                <span class="text-xs text-white/30 font-mono py-2">S</span>
+                            </div>
+                            
+                            <!-- Calendar Days Grid (Visual Only) -->
+                            <div class="grid grid-cols-7 gap-1 text-sm">
+                                <button class="aspect-square flex items-center justify-center text-white/20 rounded-lg hover:bg-white/5" disabled="">28</button>
+                                <button class="aspect-square flex items-center justify-center text-white/20 rounded-lg hover:bg-white/5" disabled="">29</button>
+                                <button class="aspect-square flex items-center justify-center text-white/20 rounded-lg hover:bg-white/5" disabled="">30</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">1</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">2</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">3</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">4</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">5</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">6</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">7</button>
+                                <button class="aspect-square flex items-center justify-center bg-brand-blue text-white rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.5)] relative">
+                                    8
+                                    <span class="absolute -bottom-1 w-1 h-1 bg-white rounded-full"></span>
+                                </button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">9</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">10</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">11</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">12</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">13</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">14</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">15</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">16</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">17</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">18</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">19</button>
+                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">20</button>
+                            </div>
+                        </div>
+
+                        <!-- Time Slots -->
+                        <div class="flex flex-col h-full">
+                            <h4 class="text-white font-medium mb-4 text-sm">Available times for Oct 8</h4>
+                            <div class="space-y-2 overflow-y-auto max-h-[260px] pr-2 custom-scrollbar">
+                                <button class="w-full text-left px-4 py-3 rounded-lg border border-white/10 hover:border-brand-blue hover:bg-brand-blue/10 text-sm text-white/80 hover:text-white transition-all group flex items-center justify-between time-slot-btn">
+                                    <span>09:00 AM</span>
+                                    <iconify-icon icon="solar:arrow-right-linear" class="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-blue"></iconify-icon>
+                                </button>
+                                <button class="w-full text-left px-4 py-3 rounded-lg border border-white/10 hover:border-brand-blue hover:bg-brand-blue/10 text-sm text-white/80 hover:text-white transition-all group flex items-center justify-between time-slot-btn">
+                                    <span>09:30 AM</span>
+                                    <iconify-icon icon="solar:arrow-right-linear" class="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-blue"></iconify-icon>
+                                </button>
+                                <button class="w-full text-left px-4 py-3 rounded-lg border border-brand-blue bg-brand-blue/10 text-sm text-white font-medium transition-all group flex items-center justify-between shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                                    <span>10:00 AM</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-[10px] uppercase tracking-wider text-brand-blue font-bold">Selected</span>
+                                        <iconify-icon icon="solar:check-circle-bold" class="text-brand-blue"></iconify-icon>
+                                    </div>
+                                </button>
+                                <button class="w-full text-left px-4 py-3 rounded-lg border border-white/10 hover:border-brand-blue hover:bg-brand-blue/10 text-sm text-white/80 hover:text-white transition-all group flex items-center justify-between time-slot-btn">
+                                    <span>10:30 AM</span>
+                                    <iconify-icon icon="solar:arrow-right-linear" class="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-blue"></iconify-icon>
+                                </button>
+                                <button class="w-full text-left px-4 py-3 rounded-lg border border-white/10 hover:border-brand-blue hover:bg-brand-blue/10 text-sm text-white/80 hover:text-white transition-all group flex items-center justify-between time-slot-btn">
+                                    <span>11:00 AM</span>
+                                    <iconify-icon icon="solar:arrow-right-linear" class="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-blue"></iconify-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Confirmation Form (Hidden by default in logic, shown here for design) -->
+                    <div class="px-6 md:px-8 pb-8 pt-0 border-t border-white/5 mt-4">
+                        <div class="py-4">
+                            <label class="block text-xs font-mono text-white/40 mb-1.5">CONFIRM DETAILS</label>
+                            <div class="flex gap-2">
+                                <input type="email" placeholder="work@email.com" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all placeholder:text-white/20">
+                                <button class="bg-brand-blue text-white rounded-lg px-6 py-2 text-sm font-medium hover:bg-blue-600 transition-colors whitespace-nowrap">
+                                    Book Call
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><script>
+    document.querySelectorAll('.date-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active state from current
+            document.querySelectorAll('.date-btn, .bg-brand-blue').forEach(b => {
+                b.className = 'aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn';
+                b.innerHTML = b.innerText; // remove dot
+            });
+            // Add active state to clicked
+            this.className = 'aspect-square flex items-center justify-center bg-brand-blue text-white rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.5)] relative';
+            this.innerHTML = `${this.innerText}<span class="absolute -bottom-1 w-1 h-1 bg-white rounded-full"></span>`;
+        });
+    });
+
+    document.querySelectorAll('.time-slot-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Very simple visual feedback
+            const span = this.querySelector('span').innerText;
+            alert(`Demo: You selected ${span}. In production, this proceeds to booking confirmation.`);
+        });
+    });
+</script>
+
+    <!-- Footer Area (Minimal) -->
+    <footer class="border-t border-white/10 bg-[#050505] py-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-6 h-6 rounded-full bg-brand-blue/20 flex items-center justify-center text-brand-blue">
+                    <iconify-icon icon="solar:bolt-circle-bold" width="16"></iconify-icon>
+                </div>
+                <span class="text-sm font-medium tracking-tight text-white">Epoch Digital</span>
+            </div>
+            <div class="text-xs text-white/40 flex items-center gap-6">
+                <span>© 2025 Epoch Digital</span>
+                <span class="hidden sm:inline">All rights reserved</span>
+                <div class="flex items-center gap-1.5 ml-4">
+                    <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                    <span class="font-mono text-xs uppercase text-white/60 scale-90 origin-left">Systems Operational</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Card Interaction Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardsContainer = document.querySelector('.cards-section');
+            const cards = document.querySelectorAll('.feature-card');
+            const navButtons = document.querySelectorAll('[id^="nav-"]');
+            let activeFeature = 1;
+            let autoRotateInterval;
+
+            // Update UI Helper
+            function updateUI(featureId) {
+                // Update Container Class
+                cardsContainer.className = `cards-section feature-${featureId}-active h-[500px]`;
+                
+                // Update Dots
+                navButtons.forEach((button, index) => {
+                    if (index + 1 === featureId) {
+                        button.className = 'w-2 h-2 rounded-full bg-brand-blue transition-all scale-125 ring-2 ring-brand-blue/20 ring-offset-2 ring-offset-black';
+                    } else {
+                        button.className = 'w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all';
+                    }
+                });
+            }
+
+            // Switch Feature Logic
+            function switchToFeature(featureId) {
+                activeFeature = featureId;
+                updateUI(featureId);
+                resetAutoRotate();
+            }
+
+            // Auto Rotation
+            function startAutoRotate() {
+                autoRotateInterval = setInterval(() => {
+                    const nextFeature = activeFeature === 4 ? 1 : activeFeature + 1;
+                    activeFeature = nextFeature;
+                    updateUI(nextFeature);
+                }, 5000);
+            }
+
+            function resetAutoRotate() {
+                clearInterval(autoRotateInterval);
+                startAutoRotate();
+            }
+
+            // Button Click Listeners
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const featureId = parseInt(button.id.split('-')[1]);
+                    switchToFeature(featureId);
+                });
+            });
+
+            // Touch/Drag Logic
+            cards.forEach((card, index) => {
+                let startX, isDragging = false;
+                
+                card.addEventListener('mousedown', e => initDrag(e, index + 1));
+                card.addEventListener('touchstart', e => {
+                    // Don't prevent default immediately to allow scrolling if not horizontal swipe
+                    // but here we want to grab card
+                    // e.preventDefault(); 
+                    initDrag(e.touches[0], index + 1);
+                }, {passive: true});
+
+                function initDrag(e, featureId) {
+                    // Only drag the top card
+                    if (featureId !== activeFeature) return;
+                    
+                    isDragging = true;
+                    startX = e.clientX;
+                    card.style.cursor = 'grabbing';
+                    
+                    document.addEventListener('mousemove', handleDrag);
+                    document.addEventListener('touchmove', handleTouchMove, {passive: false});
+                    document.addEventListener('mouseup', endDrag);
+                    document.addEventListener('touchend', endDrag);
+                }
+
+                function handleTouchMove(e) {
+                     handleDrag(e.touches[0]);
+                }
+
+                function handleDrag(e) {
+                    if (!isDragging) return;
+                    const diff = e.clientX - startX;
+                    
+                    // Add slight rotation/visual feedback
+                    if (diff > 50) {
+                        card.classList.add('dragging-right');
+                        card.classList.remove('dragging-left');
+                    } else if (diff < -50) {
+                        card.classList.add('dragging-left');
+                        card.classList.remove('dragging-right');
+                    } else {
+                        card.classList.remove('dragging-left', 'dragging-right');
+                    }
+                }
+
+                function endDrag() {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    card.style.cursor = 'grab';
+
+                    if (card.classList.contains('dragging-right')) {
+                        // Swipe Right -> Go back
+                        switchToFeature(activeFeature === 1 ? 4 : activeFeature - 1);
+                    } else if (card.classList.contains('dragging-left')) {
+                        // Swipe Left -> Next
+                        switchToFeature(activeFeature === 4 ? 1 : activeFeature + 1);
+                    }
+                    
+                    card.classList.remove('dragging-left', 'dragging-right');
+                    document.removeEventListener('mousemove', handleDrag);
+                    document.removeEventListener('touchmove', handleTouchMove);
+                    document.removeEventListener('mouseup', endDrag);
+                    document.removeEventListener('touchend', endDrag);
+                }
+            });
+
+            // Init
+            startAutoRotate();
+        });
+    </script>
+
+</body></html>
