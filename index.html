@@ -525,118 +525,24 @@
                 </div>
             </div>
 
-            <!-- Right: Interactive Calendar Widget -->
+            <!-- Right: Cal.com Calendar Widget -->
             <div class="lg:col-span-3">
-                <div class="bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative">
-                    <!-- Calendar Header -->
-                    <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
-                        <div class="flex items-center gap-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
-                        </div>
-                        <span class="text-xs font-mono text-white/40">CALENDAR_V2.0</span>
-                    </div>
+                <div class="bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative" style="min-height: 500px;">
+                    <!-- Cal inline embed code begins -->
+                    <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-30min"></div>
+                    <script type="text/javascript">
+                      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+                    Cal("init", "30min", {origin:"https://app.cal.com"});
 
-                    <div class="p-6 md:p-8 grid md:grid-cols-2 gap-8" id="booking-widget">
-                        <!-- Date Picker -->
-                        <div>
-                            <div class="flex items-center justify-between mb-6">
-                                <span class="text-white font-medium">October 2025</span>
-                                <div class="flex gap-2">
-                                    <button class="w-8 h-8 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors">
-                                        <iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon>
-                                    </button>
-                                    <button class="w-8 h-8 rounded hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors">
-                                        <iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-7 gap-1 mb-2 text-center">
-                                <span class="text-xs text-white/30 font-mono py-2">S</span>
-                                <span class="text-xs text-white/30 font-mono py-2">M</span>
-                                <span class="text-xs text-white/30 font-mono py-2">T</span>
-                                <span class="text-xs text-white/30 font-mono py-2">W</span>
-                                <span class="text-xs text-white/30 font-mono py-2">T</span>
-                                <span class="text-xs text-white/30 font-mono py-2">F</span>
-                                <span class="text-xs text-white/30 font-mono py-2">S</span>
-                            </div>
-                            
-                            <!-- Calendar Days Grid (Visual Only) -->
-                            <div class="grid grid-cols-7 gap-1 text-sm">
-                                <button class="aspect-square flex items-center justify-center text-white/20 rounded-lg hover:bg-white/5" disabled="">28</button>
-                                <button class="aspect-square flex items-center justify-center text-white/20 rounded-lg hover:bg-white/5" disabled="">29</button>
-                                <button class="aspect-square flex items-center justify-center text-white/20 rounded-lg hover:bg-white/5" disabled="">30</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">1</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">2</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">3</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">4</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">5</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">6</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">7</button>
-                                <button class="aspect-square flex items-center justify-center bg-brand-blue text-white rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.5)] relative">
-                                    8
-                                    <span class="absolute -bottom-1 w-1 h-1 bg-white rounded-full"></span>
-                                </button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">9</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">10</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">11</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">12</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">13</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">14</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">15</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">16</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">17</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">18</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">19</button>
-                                <button class="aspect-square flex items-center justify-center text-white/80 rounded-lg hover:bg-white/10 hover:text-white transition-colors date-btn">20</button>
-                            </div>
-                        </div>
+                      Cal.ns["30min"]("inline", {
+                        elementOrSelector:"#my-cal-inline-30min",
+                        config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},
+                        calLink: "silvano-matthews-i72af8/30min",
+                      });
 
-                        <!-- Time Slots -->
-                        <div class="flex flex-col h-full">
-                            <h4 class="text-white font-medium mb-4 text-sm">Available times for Oct 8</h4>
-                            <div class="space-y-2 overflow-y-auto max-h-[260px] pr-2 custom-scrollbar">
-                                <button class="w-full text-left px-4 py-3 rounded-lg border border-white/10 hover:border-brand-blue hover:bg-brand-blue/10 text-sm text-white/80 hover:text-white transition-all group flex items-center justify-between time-slot-btn">
-                                    <span>09:00 AM</span>
-                                    <iconify-icon icon="solar:arrow-right-linear" class="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-blue"></iconify-icon>
-                                </button>
-                                <button class="w-full text-left px-4 py-3 rounded-lg border border-white/10 hover:border-brand-blue hover:bg-brand-blue/10 text-sm text-white/80 hover:text-white transition-all group flex items-center justify-between time-slot-btn">
-                                    <span>09:30 AM</span>
-                                    <iconify-icon icon="solar:arrow-right-linear" class="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-blue"></iconify-icon>
-                                </button>
-                                <button class="w-full text-left px-4 py-3 rounded-lg border border-brand-blue bg-brand-blue/10 text-sm text-white font-medium transition-all group flex items-center justify-between shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-                                    <span>10:00 AM</span>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-[10px] uppercase tracking-wider text-brand-blue font-bold">Selected</span>
-                                        <iconify-icon icon="solar:check-circle-bold" class="text-brand-blue"></iconify-icon>
-                                    </div>
-                                </button>
-                                <button class="w-full text-left px-4 py-3 rounded-lg border border-white/10 hover:border-brand-blue hover:bg-brand-blue/10 text-sm text-white/80 hover:text-white transition-all group flex items-center justify-between time-slot-btn">
-                                    <span>10:30 AM</span>
-                                    <iconify-icon icon="solar:arrow-right-linear" class="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-blue"></iconify-icon>
-                                </button>
-                                <button class="w-full text-left px-4 py-3 rounded-lg border border-white/10 hover:border-brand-blue hover:bg-brand-blue/10 text-sm text-white/80 hover:text-white transition-all group flex items-center justify-between time-slot-btn">
-                                    <span>11:00 AM</span>
-                                    <iconify-icon icon="solar:arrow-right-linear" class="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-blue"></iconify-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Confirmation Form (Hidden by default in logic, shown here for design) -->
-                    <div class="px-6 md:px-8 pb-8 pt-0 border-t border-white/5 mt-4">
-                        <div class="py-4">
-                            <label class="block text-xs font-mono text-white/40 mb-1.5">CONFIRM DETAILS</label>
-                            <div class="flex gap-2">
-                                <input type="email" placeholder="work@email.com" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all placeholder:text-white/20">
-                                <button class="bg-brand-blue text-white rounded-lg px-6 py-2 text-sm font-medium hover:bg-blue-600 transition-colors whitespace-nowrap">
-                                    Book Call
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                      Cal.ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+                    </script>
+                    <!-- Cal inline embed code ends -->
                 </div>
             </div>
         </div>
