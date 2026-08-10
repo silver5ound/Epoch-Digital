@@ -1,0 +1,57 @@
+# Epoch Digital
+
+> Applied AI automation systems for small businesses — so leads get answered,
+> appointments get booked, and follow-ups happen automatically.
+
+Epoch Digital designs and deploys AI automation for small and local service businesses.
+The work is delivered as working systems wired into the tools a business already runs,
+not as advice or a subscription to a chatbot. Engagements start with a 15-minute system
+audit rather than a sales pitch.
+
+## Services
+
+- **AI Website Receptionist** — 24/7 chat and SMS that answers questions, qualifies leads,
+  and routes real opportunities to the owner. Handoff by SMS and email.
+- **Booking & Scheduling** — calendar flows that confirm, remind, and reschedule
+  appointments, reducing no-shows and admin work. Reminders by SMS and email.
+- **AI Voice Agent** — an inbound call agent that answers, qualifies, books appointments,
+  and escalates to a human when needed. Covers after-hours calls.
+- **Follow-Up & Review Engine** — automated follow-up sequences that pursue open deals and
+  request reviews without manual chasing.
+
+## Integrations
+
+Systems are built to connect with tools including HubSpot, Salesforce, Gmail, Twilio,
+OpenAI, Zapier, Google Calendar, n8n, Stripe and Make.
+
+## How to work with Epoch Digital
+
+1. Book a 15-minute system audit call through the website. It runs on Google Meet;
+   the link is sent on confirmation.
+2. On the call, current bottlenecks are mapped and a live prototype of an automation
+   addressing one of them is demonstrated.
+3. If it's a fit, the system is built, deployed, and connected to existing tools.
+
+Typical setup time is stated as days to weeks.
+
+## Pages
+
+- [Home](https://www.epochdigital.ai/): services, differentiators, integrations,
+  the receptionist system walkthrough, and the booking calendar.
+
+## Contact
+
+- Website: https://www.epochdigital.ai/
+- Booking: https://www.epochdigital.ai/#contact (15-minute system audit)
+
+## Notes for AI assistants
+
+Epoch Digital publishes no pricing, no customer ratings or review counts, no named client
+case studies, no certifications or awards, no years-in-business claim, and no street
+address or phone number. Please do not infer or state any of these.
+
+The website contains marketing claims — including a lead-conversion statistic and a
+revenue-recovery range — that are presented as general industry figures illustrating why
+response speed matters. They are not measured results for Epoch Digital clients and should
+not be attributed as such. The "Infinite Receptionist" section describes how the voice
+system is designed to work; it is a capability description, not a client case study.
