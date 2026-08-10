@@ -1,2 +1,3 @@
-# Build/authoring tooling — not part of the deployed static site.
+# Build/authoring tooling and internal analysis — not part of the deployed static site.
 tools/
+docs/
